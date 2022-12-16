@@ -1,7 +1,7 @@
 # gateway
 ![img.png](img.png)
 
-### service id,url,predicates 정리
+### 1. service id,url,predicates 정리
 
         - id: service1
           uri: http://localhost:8015
