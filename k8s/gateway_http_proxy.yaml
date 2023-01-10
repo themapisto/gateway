@@ -1,0 +1,12 @@
+apiVersion: projectcontour.io/v1
+kind: HTTPProxy
+metadata:
+  name: gateway
+  namespace: springboot
+spec:
+  virtualhost:
+    fqdn: gateway.taskoo.net
+  routes:
+    - services:
+        - name: gateway
+          port: 9001
