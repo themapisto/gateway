@@ -17,6 +17,6 @@ spec:
     spec:
       containers:
         - name: gateway
-          image: harbor.aikoo.net/tanzu/gateway:1.6
+          image: harbor.aikoo.net/tanzu/gateway:1.7
           ports:
             - containerPort: 9001
