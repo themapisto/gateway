@@ -7,11 +7,10 @@ spring:
     name: config
   config:
     import: optional:configserver:http://config.taskoo.net
-management:
-  endpoints:
-    web:
-      exposure:
-        include: refresh
+
+
+
+
 
 eureka:
   instance:
