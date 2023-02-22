@@ -1,23 +1,17 @@
 server:
-  port: 9002
+  port: 8034
 spring:
+  profiles: # ??? ???? ??, ??? ? ???? ??.
+    active: gateway
   application:
-    name: gateway
-  cloud:
-    gateway:
-      routes:
-        - id: service1
-          uri: http://service1.taskoo.net
-          predicates:
-            - Path=/services/**
-        - id: service31
-          uri: http://client.taskoo.net
-          predicates:
-            - Path=/client/**
-        - id: gateway
-          uri: http://gateway.taskoo.net
-          predicates:
-            - Path=/gateway/**
+    name: config
+  config:
+    import: optional:configserver:http://config.taskoo.net
+management:
+  endpoints:
+    web:
+      exposure:
+        include: refresh
 
 eureka:
   instance:
