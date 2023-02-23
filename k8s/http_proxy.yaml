@@ -9,4 +9,4 @@ spec:
   routes:
     - services:
         - name: gateway
-          port: 9001
+          port: 9002

@@ -8,9 +8,9 @@ metadata:
   namespace: springboot
 spec:
   ports:
-    - port: 9001
+    - port: 9002
       protocol: TCP
-      targetPort: 9001
+      targetPort: 9002
   selector:
     app: gateway
   type: ClusterIP
