@@ -13,11 +13,11 @@ import org.springframework.web.bind.annotation.RestController;
 public class DController {
 
 
-    @GetMapping
-    public String service(){
-        return "Hello";
-    }
-
+//    @GetMapping
+//    public String service(){
+//        return "Hello";
+//    }
+//
 
 
     @GetMapping(value = "/info")
