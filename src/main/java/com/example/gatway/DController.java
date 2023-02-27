@@ -8,10 +8,15 @@ import org.springframework.web.bind.annotation.RestController;
 
 
 @RestController
-@RequestMapping("/service1")
+@RequestMapping("/services")
 @Slf4j
 public class DController {
 
+
+    @GetMapping
+    public String service(){
+        return "Hello";
+    }
 
 
 
