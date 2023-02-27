@@ -4,7 +4,6 @@ metadata:
   creationTimestamp: null
   labels:
     app: gateway
-    version: v1
   name: gateway
   namespace: springboot
 spec:
@@ -14,7 +13,6 @@ spec:
       targetPort: 9002
   selector:
     app: gateway
-    version: v1
   type: ClusterIP
 status:
   loadBalancer: {}
