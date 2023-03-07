@@ -15,6 +15,6 @@ public class EnvoyController {
     @GetMapping
     public String services() {
         System.out.println("Envoy filter가 호출했습니다.");
-        return "Hello";
+        return "Envoy filter을 통해 service1을 호출하겠습니다.";
     }
 }
