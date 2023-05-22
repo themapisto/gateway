@@ -7,14 +7,30 @@ spring:
     name: config
   config:
     import: optional:configserver:http://config.taskoo.net
-
-
-
-
+  cloud:
+    gateway:
+      default-filters:
+        - name: GlobalFilter
+          args:
+            baseMessage: This is a Spring Cloud Gateway baseMessage Global Filter
+            preLogger: true
+            postLogger: true
+      routes:
+        - id: user
+          uri: lb://USER # uri: http://localhost:4002 # 포워딩 할 주소, http://localhost:8000/test 로 들어오면 http://localhost:4002 로 포워딩
+          predicates:
+            - Path=/user/** # 해당 gateway 서버의 /test/**로 들어오는 요은 test로 인식하겠다는 조건
+          filters:
+            - name: CustomFilter
+            - name: LoggingFilter
+              args:
+                baseMessage: This is a baseMessage Logging Filter
+                preLogger: true
+                postLogger: true
+#            - AddRequestHeader=user-request, user-request-header2    # Header에 값 추가
+#            - AddResponseHeader=user-response, user-response-header2
 
 eureka:
-  instance:
-    prefer-ip-address: true
   client:
     register-with-eureka: true # 유레카 서비스에 (자신을) 등록 여부
     fetch-registry: true
