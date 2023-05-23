@@ -4,12 +4,26 @@ spring:
   profiles: # ??? ???? ??, ??? ? ???? ??.
     active: gateway
   application:
-    name: config
+    name: gateway
   config:
     import: optional:configserver:http://config.taskoo.net
-
-
-
+  cloud:
+    gateway:
+      routes:
+        - id: user
+          uri: lb://user
+          # uri: http://localhost:4003 # 포워딩할 주소, http://localhost:9002/user 로 들어오면 http://localhost:4003/user 로 포워딩
+          predicates:
+            - Path=/user/**
+          filters:
+            - CustomAuthFilter
+        - id: user-api
+          uri: lb://user
+          # uri: http://localhost:4003/api # 포워딩할 주소, http://localhost:9002/api/user 로 들어오면 http://localhost:4003/api/user 로 포워딩
+          predicates:
+            - Path=/api/user/**
+          filters:
+            - CustomAuthFilter
 
 
 eureka:
@@ -19,7 +33,9 @@ eureka:
     register-with-eureka: true # 유레카 서비스에 (자신을) 등록 여부
     fetch-registry: true
     serviceUrl:
-      defaultZone: http://eureka.taskoo.net/eureka
+      defaultZone : http://localhost:8761/eureka
+      # defaultZone: http://eureka.taskoo.net/eureka
+
 
 management:
   endpoints:
