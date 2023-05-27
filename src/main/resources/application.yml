@@ -1,17 +1,25 @@
 server:
   port: 9002
 spring:
-  profiles: # ??? ???? ??, ??? ? ???? ??.
-    active: gateway
   application:
-    name: config
-  config:
-    import: optional:configserver:http://config.taskoo.net
-
-
-
-
-
+    name: gateway
+  cloud:
+    gateway:
+      routes:
+        - id: service31
+          uri: http://client.taskoo.net
+          predicates:
+            - Path=/form/**
+        - id: gateway
+          uri: http://gateway.taskoo.net
+          predicates:
+            - Path=/gateway/**
+        - id: test-service
+          predicates:
+            - Path=/first-service/**
+          uri: lb://SERVICE1
+          filters:
+            - RewritePath=/first-service/(?<segment>.*), /$\{segment}
 eureka:
   instance:
     prefer-ip-address: true
