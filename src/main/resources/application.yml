@@ -22,13 +22,14 @@ spring:
             - Path=/user/login 
             - Method=POST
           filters:
+            - RemoveRequestHeader=Cookie
             - RewritePath=/user/(?<segment>.*), /$\{segment}
-            - name: CustomFilter
-            - name: LoggingFilter
-              args:
-                baseMessage: This is a baseMessage Logging Filter
-                preLogger: true
-                postLogger: true
+#            - name: CustomFilter
+#            - name: LoggingFilter
+#              args:
+#                baseMessage: This is a baseMessage Logging Filter
+#                preLogger: true
+#                postLogger: true
 #            - AddRequestHeader=user-request, user-request-header2    # Header에 값 추가
 #            - AddResponseHeader=user-response, user-response-header2
         - id: user
@@ -37,21 +38,25 @@ spring:
             - Path=/user/create
             - Method=POST
           filters:
+            - RemoveRequestHeader=Cookie
             - RewritePath=/user/(?<segment>.*), /$\{segment}
-            - name: CustomFilter
-            - name: LoggingFilter
-              args:
-                baseMessage: This is a baseMessage Logging Filter
-                preLogger: true
-                postLogger: true
+#            - name: CustomFilter
+#            - name: LoggingFilter
+#              args:
+#                baseMessage: This is a baseMessage Logging Filter
+#                preLogger: true
+#                postLogger: true
 #            - AddRequestHeader=user-request, user-request-header2    # Header에 값 추가
 #            - AddResponseHeader=user-response, user-response-header2
         - id: user
           uri: lb://USER # uri: http://localhost:4002 # 포워딩 할 주소, http://localhost:8000/test 로 들어오면 http://localhost:4002 로 포워딩
           predicates:
             - Path=/user/** # 해당 gateway 서버의 /test/**로 들어오는 요은 test로 인식하겠다는 조건
+            - Method=GET
           filters:
+            - RemoveRequestHeader=Cookie
             - RewritePath=/user/(?<segment>.*), /$\{segment}
+            - AuthorizationHeaderFilter
             - name: CustomFilter
             - name: LoggingFilter
               args:
@@ -61,6 +66,9 @@ spring:
 #            - AddRequestHeader=user-request, user-request-header2    # Header에 값 추가
 #            - AddResponseHeader=user-response, user-response-header2
 
+token:
+  expiration_time: 864000000
+  secret: user_token
 
 eureka:
   client:
