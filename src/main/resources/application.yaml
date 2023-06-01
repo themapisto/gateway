@@ -6,7 +6,6 @@ spring:
   cloud:
     gateway:
       routes:
-<<<<<<< HEAD
         - id: service1
           uri: lb://SERVICE1
           predicates:
@@ -17,14 +16,6 @@ spring:
             - Path=/client/**
         - id: gateway
           uri: lb://GATEWAY
-=======
-        - id: service31
-          uri: http://client.taskoo.net
-          predicates:
-            - Path=/form/**
-        - id: gateway
-          uri: http://gateway.taskoo.net
->>>>>>> 80bffa6c0cee9b2571f7d29e1a3fbabb0ab40a69
           predicates:
             - Path=/gateway/**
         - id: test-service
@@ -33,10 +24,7 @@ spring:
           uri: lb://SERVICE1
           filters:
             - RewritePath=/first-service/(?<segment>.*), /$\{segment}
-<<<<<<< HEAD
 
-=======
->>>>>>> 80bffa6c0cee9b2571f7d29e1a3fbabb0ab40a69
 eureka:
   instance:
     prefer-ip-address: true
