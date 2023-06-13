@@ -2,7 +2,7 @@ server:
   port: 9002
 spring:
   profiles: # ??? ???? ??, ??? ? ???? ??.
-    active: gateway
+    active: gateway2
   application:
     name: config
   config:
@@ -17,15 +17,15 @@ spring:
             postLogger: true
       routes:
         - id: user
-          uri: lb://USER 
+          uri: lb://USER
           predicates:
-            - Path=/user/login 
+            - Path=/user/login
             - Method=POST
           filters:
             - RemoveRequestHeader=Cookie
             - RewritePath=/user/(?<segment>.*), /$\{segment}
         - id: user
-          uri: lb://USER 
+          uri: lb://USER
           predicates:
             - Path=/user/create
             - Method=POST
@@ -40,7 +40,7 @@ spring:
           filters:
             - RemoveRequestHeader=Cookie
             - RewritePath=/user/(?<segment>.*), /$\{segment}
-            - AuthorizationHeaderFilter
+            #- AuthorizationHeaderFilter
             - name: CustomFilter
             - name: LoggingFilter
               args:
@@ -60,6 +60,7 @@ eureka:
     fetch-registry: true
     serviceUrl:
       defaultZone: http://eureka.taskoo.net/eureka
+      # defaultZone: http://localhost:8761/eureka
 
 management:
   endpoints:
