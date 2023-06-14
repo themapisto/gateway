@@ -2,7 +2,7 @@ server:
   port: 9002
 spring:
   profiles: # ??? ???? ??, ??? ? ???? ??.
-    active: gateway
+    active: gateway2
   application:
     name: config
   config:
@@ -17,42 +17,41 @@ spring:
             postLogger: true
       routes:
         - id: user
-          uri: lb://USER 
+          uri: lb://USER
           predicates:
-            - Path=/user/login 
+            - Path=/user/login
             - Method=POST
           filters:
             - RemoveRequestHeader=Cookie
             - RewritePath=/user/(?<segment>.*), /$\{segment}
-#            - name: CustomFilter
-#            - name: LoggingFilter
-#              args:
-#                baseMessage: This is a baseMessage Logging Filter
-#                preLogger: true
-#                postLogger: true
-#            - AddRequestHeader=user-request, user-request-header2    # Header에 값 추가
-#            - AddResponseHeader=user-response, user-response-header2
         - id: user
-          uri: lb://USER 
+          uri: lb://USER
           predicates:
             - Path=/user/create
             - Method=POST
           filters:
             - RemoveRequestHeader=Cookie
             - RewritePath=/user/(?<segment>.*), /$\{segment}
-#            - name: CustomFilter
-#            - name: LoggingFilter
-#              args:
-#                baseMessage: This is a baseMessage Logging Filter
-#                preLogger: true
-#                postLogger: true
-#            - AddRequestHeader=user-request, user-request-header2    # Header에 값 추가
-#            - AddResponseHeader=user-response, user-response-header2
+        - id: user
+          uri: lb://USER
+          predicates:
+            - Path=/user/loginPage
+            - Method=GET
+          filters:
+            - RemoveRequestHeader=Cookie
+            - RewritePath=/user/(?<segment>.*), /$\{segment}
+        - id: user
+          uri: lb://USER
+          predicates:
+            - Path=/user/joinPage
+            - Method=GET
+          filters:
+            - RemoveRequestHeader=Cookie
+            - RewritePath=/user/(?<segment>.*), /$\{segment}
         - id: user
           uri: lb://USER # uri: http://localhost:4002 # 포워딩 할 주소, http://localhost:8000/test 로 들어오면 http://localhost:4002 로 포워딩
           predicates:
             - Path=/user/** # 해당 gateway 서버의 /test/**로 들어오는 요은 test로 인식하겠다는 조건
-            - Method=GET
           filters:
             - RemoveRequestHeader=Cookie
             - RewritePath=/user/(?<segment>.*), /$\{segment}
@@ -67,7 +66,6 @@ spring:
 #            - AddResponseHeader=user-response, user-response-header2
 
 token:
-  expiration_time: 864000000
   secret: user_token
 
 eureka:
@@ -75,8 +73,8 @@ eureka:
     register-with-eureka: true # 유레카 서비스에 (자신을) 등록 여부
     fetch-registry: true
     serviceUrl:
-      # defaultZone: http://eureka.taskoo.net/eureka # 서비스를 등록할 Eureka 서버 주소를 지정
-      defaultZone: http://localhost:8761/eureka # 서비스를 등록할 Eureka 서버 주소를 지정
+      defaultZone: http://eureka.taskoo.net/eureka
+      # defaultZone: http://localhost:8761/eureka
 
 management:
   endpoints:
